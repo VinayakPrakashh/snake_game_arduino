@@ -81,10 +81,8 @@ void loop() {
     timer = 0;
     Update();
   }
-  
   //Render
   Render();
-  
 }
 
 float calculateDeltaTime(){
@@ -103,7 +101,6 @@ void Update(){
   reset();//Reset (Clear) the 8x8 LED matrix
   
   int newHead[2] = {snake.head[0]+snake.dir[0], snake.head[1]+snake.dir[1]};
-
   //Handle Borders
   if(newHead[0]==8){
     newHead[0]=0;
