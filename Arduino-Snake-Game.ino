@@ -22,6 +22,9 @@ const int CS =11;
 const int CLK = 10;
 LedControl lc = LedControl(DIN, CLK, CS,1);
 
+const int varXPin = A3;//X Value  from Joystick
+const int varYPin = A4;//Y Value from Joystick
+
 byte pic[8] = {0,0,0,0,0,0,0,0};//The 8 rows of the LED Matrix
 
 Snake snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};//Initialize a snake object
@@ -34,9 +37,9 @@ float updateRate = 3;
 
 int i,j;//Counters
 char R;
+
 void setup() {
   Serial.begin(9600);
-  pinMode(13,OUTPUT);
   // put your setup code here, to run once:
     /*
    The MAX72XX is in power-saving mode on startup,
@@ -47,39 +50,34 @@ void setup() {
   lc.setIntensity(0,8);
   /* and clear the display */
   lc.clearDisplay(0);
-
 }
 
 void loop() {
-  if(Serial.available()){
- R = Serial.read();
-  }
   // put your main code here, to run repeatedly:
   float deltaTime = calculateDeltaTime();
   timer += deltaTime;
-  
+
+ if(Serial.available()>0){
+ R = Serial.read();
+ }
+
   if(R == 'l' && snake.dir[1]==0){//Left
-  Serial.println("Left");
     snake.dir[0] = 0;
     snake.dir[1] = -1;
+    R = 'k';
   }else if(R == 'r' && snake.dir[1]==0){//Right
-  Serial.println("Right");
-    digitalWrite(13,HIGH);
-    // snake.dir[0] = 0;
-    // snake.dir[1] = 1;
+ 
+    snake.dir[0] = 0;
+    snake.dir[1] = 1;
+    R = 'k';
   }else if(R == 'r' && snake.dir[0]==0){//Up
-    Serial.println("Up");
-    
     snake.dir[0] = -1;
     snake.dir[1] = 0;
+    R = 'k';
   }else if(R== 'l' && snake.dir[0]==0){// Down
-    Serial.println("Down");
-    digitalWrite(13,LOW);
     snake.dir[0] = 1;
     snake.dir[1] = 0;
-  }
-  else{
-    digitalWrite(13,LOW);
+    R = 'k';
   }
   
   //Update
@@ -87,8 +85,10 @@ void loop() {
     timer = 0;
     Update();
   }
+  
   //Render
   Render();
+  
 }
 
 float calculateDeltaTime(){
@@ -101,13 +101,13 @@ float calculateDeltaTime(){
 void reset(){
   for(int j=0;j<8;j++){
     pic[j] = 0;
-
   }
 }
 void Update(){
   reset();//Reset (Clear) the 8x8 LED matrix
   
   int newHead[2] = {snake.head[0]+snake.dir[0], snake.head[1]+snake.dir[1]};
+
   //Handle Borders
   if(newHead[0]==8){
     newHead[0]=0;
@@ -156,7 +156,6 @@ void Update(){
 void Render(){
   
    for(i=0;i<8;i++){
-    
     lc.setRow(0,i,pic[i]);
    }
 }

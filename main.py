@@ -10,7 +10,7 @@ import threading
 def write_to_serial(message):
     message_bytes = bytes(message, 'utf-8')  # Convert string to bytes
     serialInst.write(message_bytes)
-    print("Message sent to Arduino: ", type(message_bytes))
+    print("Message sent to Arduino: ", message_bytes)
 
 warnings.filterwarnings('ignore', category=UserWarning)
 z=1
