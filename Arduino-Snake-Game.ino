@@ -1,6 +1,5 @@
 #include <LedControl.h>
 
-//Define The Snake as a Struct
 typedef struct Snake Snake;
 struct Snake{
   int head[2];     // the (row, column) of the snake head
@@ -9,39 +8,36 @@ struct Snake{
   int dir[2];      //A direction to move the snake along
 };
 
-//Define The Apple as a Struct
 typedef struct Apple Apple;
 struct Apple{
   int rPos; //The row index of the apple
   int cPos; //The column index of the apple
 };
-
-//MAX7219 led Matrix
 const int DIN =12;
 const int CS =11;
 const int CLK = 10;
 LedControl lc = LedControl(DIN, CLK, CS,1);
 
 
-byte pic[8] = {0,0,0,0,0,0,0,0};//The 8 rows of the LED Matrix
+byte pic[8] = {0,0,0,0,0,0,0,0};
 
-Snake snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};//Initialize a snake object
-Apple apple = {(int)random(0,8),(int)random(0,8)};//Initialize an apple object
+Snake snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};
+Apple apple = {(int)random(0,8),(int)random(0,8)};
 
-//Variables To Handle The Game Time
 float oldTime = 0;
 float timer = 0;
 float updateRate = 3;
 
-int i,j;//Counters
+int i,j;
 char R;
 
 void setup() {
   Serial.begin(9600);
+
   lc.shutdown(0,false);
-  /* Set the brightness to a medium values */
+  
   lc.setIntensity(0,8);
-  /* and clear the display */
+
   lc.clearDisplay(0);
 }
 
@@ -117,8 +113,8 @@ void Update(){
     if(snake.body[j][0] == newHead[0] && snake.body[j][1] == newHead[1]){
      
       delay(1000);
-      snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};//Reinitialize the snake object
-      apple = {(int)random(0,8),(int)random(0,8)};//Reinitialize an apple object
+      snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};
+      apple = {(int)random(0,8),(int)random(0,8)};
       return;
     }
   }
