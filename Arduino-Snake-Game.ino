@@ -16,14 +16,12 @@ struct Apple{
   int cPos; //The column index of the apple
 };
 
-//MAX72XX led Matrix
+//MAX7219 led Matrix
 const int DIN =12;
 const int CS =11;
 const int CLK = 10;
 LedControl lc = LedControl(DIN, CLK, CS,1);
 
-const int varXPin = A3;//X Value  from Joystick
-const int varYPin = A4;//Y Value from Joystick
 
 byte pic[8] = {0,0,0,0,0,0,0,0};//The 8 rows of the LED Matrix
 
@@ -40,11 +38,6 @@ char R;
 
 void setup() {
   Serial.begin(9600);
-  // put your setup code here, to run once:
-    /*
-   The MAX72XX is in power-saving mode on startup,
-   we have to do a wakeup call
-   */
   lc.shutdown(0,false);
   /* Set the brightness to a medium values */
   lc.setIntensity(0,8);
@@ -53,7 +46,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   float deltaTime = calculateDeltaTime();
   timer += deltaTime;
 
@@ -61,20 +53,21 @@ void loop() {
  R = Serial.read();
  }
 
-  if(R == 'l' && snake.dir[1]==0){//Left
+  if(R == 'l' && snake.dir[1]==0){
     snake.dir[0] = 0;
     snake.dir[1] = -1;
+    
     R = 'k';
-  }else if(R == 'r' && snake.dir[1]==0){//Right
+  }else if(R == 'r' && snake.dir[1]==0){
  
     snake.dir[0] = 0;
     snake.dir[1] = 1;
     R = 'k';
-  }else if(R == 'r' && snake.dir[0]==0){//Up
+  }else if(R == 'r' && snake.dir[0]==0){
     snake.dir[0] = -1;
     snake.dir[1] = 0;
     R = 'k';
-  }else if(R== 'l' && snake.dir[0]==0){// Down
+  }else if(R== 'l' && snake.dir[0]==0){
     snake.dir[0] = 1;
     snake.dir[1] = 0;
     R = 'k';
@@ -86,7 +79,7 @@ void loop() {
     Update();
   }
   
-  //Render
+  //Renderx
   Render();
   
 }
@@ -122,7 +115,7 @@ void Update(){
   //Check If The Snake hits itself
    for(j=0;j<snake.len;j++){
     if(snake.body[j][0] == newHead[0] && snake.body[j][1] == newHead[1]){
-      //Pause the game for 1 sec then Reset it
+     
       delay(1000);
       snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};//Reinitialize the snake object
       apple = {(int)random(0,8),(int)random(0,8)};//Reinitialize an apple object

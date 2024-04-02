@@ -5,12 +5,12 @@ import warnings
 import time
 import threading
 
-# ...
+
 
 def write_to_serial(message):
-    message_bytes = bytes(message, 'utf-8')  # Convert string to bytes
+    message_bytes = bytes(message, 'utf-8') 
     serialInst.write(message_bytes)
-    print("Message sent to Arduino: ", message_bytes)
+    
 
 warnings.filterwarnings('ignore', category=UserWarning)
 z=1
@@ -59,34 +59,24 @@ while True:
                 cv2.putText(frame, str(id), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
 
-            # Check if index finger is raised
+            
             index_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
             index_finger_mcp = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP]
            
-            # Check if pinky finger is raised
+            
             pinky_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP]
             pinky_finger_pip = hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_PIP]
-           
-            # # Check if middle finger and ring finger are raised
-            # middle_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP]
-            # middle_finger_pip = hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_PIP]
-            # ring_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP]
-            # ring_finger_pip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP]
-            # # Check if thumb finger is raised
-            # thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
-            # thumb_mcp = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_MCP]
             if z==0:
               pass
-            # Check if only index finger is raised
+        
             if .1+index_finger_tip.y < index_finger_mcp.y and pinky_finger_tip.y >= pinky_finger_pip.y:
-                 time.sleep(.2)  # delay to prevent sending too fast
-                 print("RIGHT")
+                 time.sleep(.2)  
+                 
                  threading.Thread(target=write_to_serial, args=('r',)).start()
 
-# Check if only pinky finger is raised
             elif index_finger_tip.y >= index_finger_mcp.y and .05+pinky_finger_tip.y < pinky_finger_pip.y:
-                time.sleep(.2)  # delay to prevent sending too fast
-                print("LEFT")
+                time.sleep(.2)  
+                
                 threading.Thread(target=write_to_serial, args=('l',)).start()
             elif index_finger_tip.y < index_finger_mcp.y and pinky_finger_tip.y < pinky_finger_pip.y:
                 pass
@@ -94,13 +84,10 @@ while True:
                 pass
 
             
-    # Display frame
     cv2.imshow('Hand Tracking', frame)
     
-    # Break loop on 'q' key press
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
-# Release video capture and destroy windows
 cap.release()
 cv2.destroyAllWindows()
