@@ -4,14 +4,9 @@ import serial.tools.list_ports
 import warnings
 import time
 import threading
-
-
-
 def write_to_serial(message):
     message_bytes = bytes(message, 'utf-8') 
     serialInst.write(message_bytes)
-    
-
 warnings.filterwarnings('ignore', category=UserWarning)
 z=1
 try:
@@ -21,8 +16,6 @@ try:
 
     for one in ports :
        portsList.append(str(one))
-     
-
     serialInst.baudrate = 9600
     serialInst.port = 'COM8'
     serialInst.open()
@@ -81,12 +74,8 @@ while True:
             elif index_finger_tip.y < index_finger_mcp.y and pinky_finger_tip.y < pinky_finger_pip.y:
                 pass
             else:
-                pass
-
-            
+                pass       
     cv2.imshow('Hand Tracking', frame)
-    
-
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 cap.release()
