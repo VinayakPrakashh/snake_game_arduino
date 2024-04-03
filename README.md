@@ -2,7 +2,7 @@
 ## Description:
 This project is a Snake game implemented on an 8x8 LED matrix display controlled by hand gestures. It utilizes Arduino for the LED matrix and Python with OpenCV for hand gesture recognition.
 ## Components used:
-1. Arduino UNO R#
+1. Arduino UNO R3
 2. MAX7219 8*8 LED matrix
 4. Jumper Wires
 5. Laptop
