@@ -1,1 +1,1 @@
-## Snake Game with Hand Gesture Control
+# Snake Game with Hand Gesture Control
