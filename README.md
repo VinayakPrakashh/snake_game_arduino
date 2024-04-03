@@ -19,3 +19,5 @@ This project is a Snake game implemented on an 8x8 LED matrix display controlled
 2. If the snake is moving in vertical direction rise the index finger to turn right and rise the pinky finger to turn left
 ![arduino-uno-500x500](https://github.com/VinayakPrakashh/snake_game_arduino/assets/101159818/d10451cb-a3d3-4147-b6a8-9e9eba6a43d0)
 ![8x8-Dot-Matrix-Display-Module-Pinout](https://github.com/VinayakPrakashh/snake_game_arduino/assets/101159818/d6ba4ba6-040b-42ff-b826-4e76c1e63247)
+## Project
+![WhatsApp Image 2024-04-03 at 22 23 09_59855bf5](https://github.com/VinayakPrakashh/snake_game_arduino/assets/101159818/a77b5955-1e15-47b8-9441-95f5c532a417)
